@@ -15,7 +15,7 @@ require (
 	github.com/grafana/mimir v0.0.0-20250501105506-4584085047c0
 	github.com/kisielk/whisper-go v0.0.0-20140112135752-82e8091afdea
 	github.com/mwitkow/go-conntrack v0.0.0-20190716064945-2f068394615f
-	github.com/oklog/run v1.1.0
+	github.com/oklog/run v1.2.0
 	github.com/oklog/ulid/v2 v2.1.1
 	github.com/opentracing-contrib/go-stdlib v1.1.0
 	github.com/opentracing/opentracing-go v1.2.1-0.20220228012449-10b1cf09e00b

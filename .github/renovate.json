@@ -1,0 +1,92 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended",
+    "helpers:pinGitHubActionDigests"
+  ],
+  "ignorePaths": [
+    "**/vendor/**"
+  ],
+  "postUpdateOptions": [
+    "gomodTidy"
+  ],
+  "branchPrefix": "grafanarenovatebot/",
+  "customManagers": [
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^\\.github/workflows/ci\\.ya?ml$/"
+      ],
+      "matchStrings": [
+        "uses:\\s+golangci/golangci-lint-action@[a-f0-9]+[\\s\\S]*?with:[\\s\\S]*?version:\\s*(?<currentValue>v?[0-9.]+)"
+      ],
+      "depNameTemplate": "golangci/golangci-lint",
+      "datasourceTemplate": "github-releases"
+    }
+  ],
+  "platformCommit": "enabled",
+  "dependencyDashboard": false,
+  "rebaseWhen": "behind-base-branch",
+  "packageRules": [
+    {
+      "description": "Group all go dependencies together to reduce noise",
+      "matchDatasources": [
+        "go"
+      ],
+      "groupName": "go dependencies"
+    },
+    {
+      "description": "Label patch updates",
+      "matchUpdateTypes": [
+        "patch"
+      ],
+      "labels": [
+        "automerge-patch"
+      ]
+    },
+    {
+      "description": "Label minor updates",
+      "matchUpdateTypes": [
+        "minor"
+      ],
+      "labels": [
+        "automerge-minor"
+      ]
+    },
+    {
+      "matchManagers": [
+        "gomod"
+      ],
+      "matchPackageNames": [
+        "go"
+      ],
+      "enabled": false
+    },
+    {
+      "matchManagers": [
+        "gomod"
+      ],
+      "matchPackageNames": [
+        "github.com/grafana/grafana-cmab-app/go-attribution-client"
+      ],
+      "enabled": false
+    },
+    {
+      "matchManagers": [
+        "gomod"
+      ],
+      "enabled": false,
+      "matchDepTypes": [
+        "indirect"
+      ]
+    }
+  ],
+  "separateMajorMinor": false,
+  "vulnerabilityAlerts": {
+    "enabled": true,
+    "labels": [
+      "automerge-security-update"
+    ]
+  },
+  "osvVulnerabilityAlerts": true
+}

@@ -12,7 +12,7 @@ require (
 	github.com/gorilla/mux v1.8.1
 	github.com/grafana/dskit v0.0.0-20250422145853-90fa6b9a2b76
 	github.com/grafana/metrictank v1.0.1-0.20230406204819-309ba74749c4
-	github.com/grafana/mimir v0.0.0-20250501105506-4584085047c0
+	github.com/grafana/mimir v0.7.0
 	github.com/kisielk/whisper-go v0.0.0-20140112135752-82e8091afdea
 	github.com/mwitkow/go-conntrack v0.0.0-20190716064945-2f068394615f
 	github.com/oklog/run v1.2.0

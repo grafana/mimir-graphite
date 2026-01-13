@@ -38,7 +38,7 @@ jobs:
           cache: false
 
       - name: Build Archives
-        uses: goreleaser/goreleaser-action@5fdedb94abba051217030cc86d4523cf3f02243d # v4.6.0
+        uses: goreleaser/goreleaser-action@e435ccd777264be153ace6237001ef4d979d3a7a # v6.4.0
         env:
           SSH_AUTH_SOCK: /tmp/ssh_agent.sock
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

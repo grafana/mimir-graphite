@@ -93,6 +93,50 @@ func TestApp_Config_Tracer(t *testing.T) {
 	})
 }
 
+func TestApp_Config_Logger(t *testing.T) {
+	t.Run("custom logger from config is used", func(t *testing.T) {
+		defer resetTracingGlobals(t)
+
+		customLogger := &testLogger{}
+		tracer := mocktracer.New()
+		app, err := New(Config{
+			ServiceName:       "test",
+			InstrumentBuckets: "0.1",
+			Log:               customLogger,
+		}, prometheus.NewRegistry(), "", tracer)
+		require.NoError(t, err)
+		require.Equal(t, customLogger, app.Logger)
+
+		err = app.Close()
+		require.NoError(t, err)
+	})
+
+	t.Run("default logger created if config logger is nil", func(t *testing.T) {
+		defer resetTracingGlobals(t)
+
+		tracer := mocktracer.New()
+		app, err := New(Config{
+			ServiceName:       "test",
+			InstrumentBuckets: "0.1",
+			Log:               nil,
+		}, prometheus.NewRegistry(), "", tracer)
+		require.NoError(t, err)
+		require.NotNil(t, app.Logger)
+
+		err = app.Close()
+		require.NoError(t, err)
+	})
+}
+
+type testLogger struct {
+	logs [][]interface{}
+}
+
+func (l *testLogger) Log(keyvals ...interface{}) error {
+	l.logs = append(l.logs, keyvals)
+	return nil
+}
+
 func resetTracingGlobals(t *testing.T) {
 	prometheus.DefaultRegisterer = prometheus.NewRegistry()
 	opentracing.SetGlobalTracer(nil)

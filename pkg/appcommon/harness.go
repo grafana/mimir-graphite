@@ -38,6 +38,9 @@ type Config struct {
 
 	ServerConfig         server.Config         `yaml:"server_config"`
 	InternalServerConfig internalserver.Config `yaml:"internal_server_config"`
+
+	// Log is an optional logger. If not set, a default logger writing to stdout will be created.
+	Log log.Logger `yaml:"-"`
 }
 
 // RegisterFlags adds the flags required to config this to the given FlagSet
@@ -95,8 +98,11 @@ func New(cfg Config, reg prometheus.Registerer, metricPrefix string, tracer open
 		}
 	}()
 
-	logger := log.NewLogfmtLogger(log.NewSyncWriter(os.Stdout))
-	logger = log.WithPrefix(logger, "ts", log.DefaultTimestampUTC)
+	logger := cfg.Log
+	if logger == nil {
+		logger = log.NewLogfmtLogger(log.NewSyncWriter(os.Stdout))
+		logger = log.WithPrefix(logger, "ts", log.DefaultTimestampUTC)
+	}
 	app.Logger = logger
 	app.LogProvider = ctxlog.NewProvider(logger)
 

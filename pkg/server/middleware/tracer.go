@@ -1,6 +1,7 @@
 package middleware
 
 import (
+	"context"
 	"fmt"
 	"net/http"
 
@@ -9,7 +10,6 @@ import (
 
 	"github.com/opentracing-contrib/go-stdlib/nethttp"
 	jaeger "github.com/uber/jaeger-client-go"
-	"golang.org/x/net/context"
 )
 
 // Tracer is a middleware which traces incoming requests.

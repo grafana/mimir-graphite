@@ -1,6 +1,6 @@
 module github.com/grafana/mimir-graphite/v2
 
-go 1.24.1
+go 1.25.0
 
 require (
 	github.com/felixge/httpsnoop v1.0.4
@@ -30,7 +30,7 @@ require (
 	go.opentelemetry.io/otel/bridge/opentracing v1.37.0
 	go.opentelemetry.io/otel/sdk v1.39.0
 	go.opentelemetry.io/otel/trace v1.39.0
-	golang.org/x/net v0.50.0
+	golang.org/x/net v0.51.0
 	google.golang.org/grpc v1.79.1
 	google.golang.org/protobuf v1.36.11
 )

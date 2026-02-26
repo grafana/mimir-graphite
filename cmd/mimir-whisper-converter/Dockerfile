@@ -1,5 +1,5 @@
 # build image from top of repo with with: docker build . -f cmd/mimir-whisper-converter/Dockerfile
-FROM python:3.10-bullseye AS build
+FROM python:3.10-bullseye@sha256:65c6bdcca22db1a3468a0262ae05f38a0a718f51e9818cd09c12094aaae28a33 AS build
 
 # Graphite whisper tools
 RUN apt update && apt -y install git \
@@ -23,7 +23,7 @@ WORKDIR /whisper
 
 RUN python ./setup.py build
 
-FROM python:3.10-bullseye
+FROM python:3.10-bullseye@sha256:65c6bdcca22db1a3468a0262ae05f38a0a718f51e9818cd09c12094aaae28a33
 
 RUN addgroup --gid 1000 app \
   && adduser --uid 1000 --home /app --gid 1000 --system app \

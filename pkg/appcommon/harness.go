@@ -180,7 +180,7 @@ type AppError []error
 func (ae AppError) Error() string {
 	var sb strings.Builder
 	for i, err := range ae {
-		sb.WriteString(fmt.Sprintf("error %d: ", i+1))
+		fmt.Fprintf(&sb, "error %d: ", i+1)
 		sb.WriteString(err.Error())
 		if i < len(ae)-1 {
 			sb.WriteString(", ")

@@ -36,6 +36,11 @@ type Config struct {
 	EnableAuth        bool   `yaml:"enable_auth"`
 	ServiceName       string `yaml:"service_name"`
 
+	// AuthMiddleware, if set, replaces the default auth middleware
+	// (HTTPAuth or HTTPFakeAuth). This allows consumers to provide
+	// custom authentication that runs before the logging middleware.
+	AuthMiddleware middleware.Interface `yaml:"-"`
+
 	ServerConfig         server.Config         `yaml:"server_config"`
 	InternalServerConfig internalserver.Config `yaml:"internal_server_config"`
 }
@@ -127,7 +132,9 @@ func New(cfg Config, reg prometheus.Registerer, metricPrefix string, tracer open
 	logMiddleware := middleware.NewLoggingMiddleware(logger)
 
 	var authMiddleware middleware.Interface
-	if cfg.EnableAuth {
+	if cfg.AuthMiddleware != nil {
+		authMiddleware = cfg.AuthMiddleware
+	} else if cfg.EnableAuth {
 		authMiddleware = middleware.NewHTTPAuth(logger)
 	} else {
 		authMiddleware = middleware.HTTPFakeAuth{}

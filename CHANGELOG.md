@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.2.0](https://github.com/grafana/mimir-graphite/compare/v2.1.0...v2.2.0) (2026-03-02)
+
+
+### Features
+
+* **appcommon:** Add ability to set custom auth handler ([f2c34e2](https://github.com/grafana/mimir-graphite/commit/f2c34e2d475e8c524078f6027665aa97c5bb8971))
+
 ## [2.1.0](https://github.com/grafana/mimir-graphite/compare/v2.0.0...v2.1.0) (2025-05-28)
 
 

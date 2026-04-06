@@ -5,7 +5,7 @@ permissions:
   contents: write
 jobs:
   call-workflow-passing-data:
-    uses: grafana/security-github-actions/.github/workflows/dependabot-automerge.yaml@main
+    uses: grafana/security-github-actions/.github/workflows/dependabot-automerge.yaml@a7ed27abb504c69482026be6e6312f42240a26b5 # main
     with:
       repository-merge-method: squash
       packages-minor-autoupdate: '["github.com/felixge/httpsnoop","github.com/go-graphite/go-whisper","github.com/go-kit/log","github.com/gogo/protobuf","github.com/golang/protobuf","github.com/golang/snappy","github.com/gorilla/mux","github.com/grafana/dskit","github.com/grafana/metrictank","github.com/grafana/mimir","github.com/kisielk/whisper-go","github.com/mwitkow/go-conntrack","github.com/oklog/run","github.com/oklog/ulid","github.com/opentracing-contrib/go-stdlib","github.com/opentracing/opentracing-go","github.com/pkg/errors","github.com/prometheus/client_golang","github.com/prometheus/common","github.com/serialx/hashring","github.com/stretchr/testify","github.com/uber/jaeger-client-go","github.com/uber/jaeger-lib","github.com/weaveworks/common","golang.org/x/net","google.golang.org/grpc"]'

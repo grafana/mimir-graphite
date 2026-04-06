@@ -254,7 +254,7 @@ replace (
 
 	github.com/thanos-io/thanos v0.22.0 => github.com/thanos-io/thanos v0.19.1-0.20211125080947-19dcc7902d24
 	// thanos requires a different version of galaxycache to build.
-	github.com/vimeo/galaxycache => github.com/thanos-community/galaxycache v0.0.0-20211122094458-3a32041a1f1e
+	github.com/vimeo/galaxycache => github.com/thanos-community/galaxycache v0.0.0-20220711100658-323e89e130ea
 
 	// Copied from Mimir.
 	gopkg.in/yaml.v3 => github.com/colega/go-yaml-yaml v0.0.0-20220720105220-255a8d16d094

@@ -335,8 +335,8 @@ github.com/grafana/dskit v0.0.0-20250422145853-90fa6b9a2b76 h1:kdB10/8BOe4TgEeNz
 github.com/grafana/dskit v0.0.0-20250422145853-90fa6b9a2b76/go.mod h1:BoqjRhTdF0f3ssb1KjVh5B3Jv/HpSd1K27+qs5f8utE=
 github.com/grafana/gomemcache v0.0.0-20250318131618-74242eea118d h1:oXRJlb9UjVsl6LhqBdbyAQ9YFhExwsj4bjh5vwMNRZY=
 github.com/grafana/gomemcache v0.0.0-20250318131618-74242eea118d/go.mod h1:j/s0jkda4UXTemDs7Pgw/vMT06alWc42CHisvYac0qw=
-github.com/grafana/metrictank v1.0.1-0.20230406204819-309ba74749c4 h1:93m2VQ1Pere3bZMgQgg/LT50lD4LS84moDmEkY4Lero=
-github.com/grafana/metrictank v1.0.1-0.20230406204819-309ba74749c4/go.mod h1:+W7kcYMB3XFMCQdmZSrXvqb8KCE84tQMaijapcRbptE=
+github.com/grafana/metrictank v1.0.1-0.20230823151713-6d15fe1d382f h1:kGlhF8M4JOwLr9P61v8ThHC2POnbXhMHygpqW/da+0w=
+github.com/grafana/metrictank v1.0.1-0.20230823151713-6d15fe1d382f/go.mod h1:+W7kcYMB3XFMCQdmZSrXvqb8KCE84tQMaijapcRbptE=
 github.com/grafana/mimir v0.0.0-20250501105506-4584085047c0 h1:t8KZCGSG6tHjPGivI0/6MDvkS8kiwgI+ZbHueWimBLI=
 github.com/grafana/mimir v0.0.0-20250501105506-4584085047c0/go.mod h1:GD9AvaM/JaOv7K38fcwEa/19vFVqhyhfgBzFLN/todQ=
 github.com/grafana/mimir-prometheus v1.8.2-0.20250423083340-007de9b763aa h1:iuyvsaMOVGaU808vvAabd+BdztRTpb8qa3pOHH7BEP8=

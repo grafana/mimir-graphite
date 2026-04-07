@@ -1,5 +1,18 @@
 # Changelog
 
+## [2.2.0](https://github.com/grafana/mimir-graphite/compare/v2.1.0...v2.2.0) (2026-04-07)
+
+
+### Features
+
+* **appcommon:** Add ability to set custom auth handler ([f2c34e2](https://github.com/grafana/mimir-graphite/commit/f2c34e2d475e8c524078f6027665aa97c5bb8971))
+
+
+### Bug Fixes
+
+* **deps:** update github.com/go-graphite/go-whisper digest to e3110f5 ([#339](https://github.com/grafana/mimir-graphite/issues/339)) ([ebf0180](https://github.com/grafana/mimir-graphite/commit/ebf0180ab81dfec75c1badc3d87f8a0db5343129))
+* **deps:** update opentelemetry-go monorepo to v1.43.0 ([#361](https://github.com/grafana/mimir-graphite/issues/361)) ([7dcd995](https://github.com/grafana/mimir-graphite/commit/7dcd9954c96b79da4c2b7a4d7b80fe1491089e86))
+
 ## [2.1.0](https://github.com/grafana/mimir-graphite/compare/v2.0.0...v2.1.0) (2025-05-28)
 
 

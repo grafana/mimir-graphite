@@ -4,7 +4,7 @@ go 1.25.0
 
 require (
 	github.com/felixge/httpsnoop v1.0.4
-	github.com/go-graphite/go-whisper v0.0.0-20230316154527-2337c74b5007
+	github.com/go-graphite/go-whisper v0.0.0-20230526115116-e3110f57c01c
 	github.com/go-kit/log v0.2.1
 	github.com/gogo/protobuf v1.3.2
 	github.com/golang/protobuf v1.5.4

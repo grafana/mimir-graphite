@@ -244,7 +244,7 @@ replace (
 	github.com/gocql/gocql => github.com/grafana/gocql v0.0.0-20200605141915-ba5dc39ece85
 
 	// Copied from Mimir.
-	github.com/prometheus/prometheus => github.com/grafana/mimir-prometheus v1.8.2-0.20250423083340-007de9b763aa
+	github.com/prometheus/prometheus => github.com/grafana/mimir-prometheus/v3 v3.2.1
 
 	// This replace comes from thanos, otherwise:
 	// # github.com/sercand/kuberesolver

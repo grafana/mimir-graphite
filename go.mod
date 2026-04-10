@@ -257,7 +257,7 @@ replace (
 	github.com/vimeo/galaxycache => github.com/thanos-community/galaxycache v0.0.0-20220711100658-323e89e130ea
 
 	// Copied from Mimir.
-	gopkg.in/yaml.v3 => github.com/colega/go-yaml-yaml v0.0.0-20220720105220-255a8d16d094
+	gopkg.in/yaml.v3 => github.com/colega/go-yaml-yaml/v3 v3.0.1
 )
 
 exclude (

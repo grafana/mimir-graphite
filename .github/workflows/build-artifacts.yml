@@ -48,7 +48,7 @@ jobs:
           args: release --skip=publish,announce --clean
 
       - name: Bundle release assets
-        uses: softprops/action-gh-release@de2c0eb89ae2a093876385947365aca7b0e5f844 # v1
+        uses: softprops/action-gh-release@153bb8e04406b158c6c84fc1615b65b24149a1fe # v2
         with:
           draft: true
           append_body: true

@@ -13,7 +13,6 @@ import (
 	"github.com/stretchr/testify/require"
 
 	"github.com/grafana/mimir-graphite/v2/pkg/graphite/convert"
-	"github.com/grafana/mimir-graphite/v2/pkg/graphite/writeproxy"
 )
 
 // TestCommandPass2 is a sanity-check for pass2.  It confirms that data is
@@ -98,7 +97,7 @@ func createData(metricNames []string) map[string]*mimirpb.TimeSeries {
 	data := make(map[string]*mimirpb.TimeSeries)
 	for _, m := range metricNames {
 		labelsBuilder := labels.NewBuilder(nil)
-		labels := writeproxy.LabelsFromUntaggedName(m, labelsBuilder)
+		labels := convert.LabelsFromUntaggedName(m, labelsBuilder)
 		samples := make([]mimirpb.Sample, numSamples)
 		for i := 0; i < numSamples; i++ {
 			samples[i] = mimirpb.Sample{

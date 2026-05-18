@@ -15,9 +15,6 @@ coverage-output: ## Get coverage output to cover.out
 coverage-show-func: ## Display coverage output
 	go tool cover -func cover.out
 
-protobuf: ## Runs protoc command to generate pb files
-	bash ./scripts/genprotobuf.sh
-
 packages-minor-autoupdate:
 	go mod edit -json \
 		| jq ".Require \

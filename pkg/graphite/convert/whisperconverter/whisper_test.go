@@ -18,7 +18,6 @@ import (
 	"github.com/stretchr/testify/require"
 
 	"github.com/grafana/mimir-graphite/v2/pkg/graphite/convert"
-	"github.com/grafana/mimir-graphite/v2/pkg/graphite/writeproxy"
 )
 
 func simpleArchiveInfo(points, secondsPerPoint int) whisper.ArchiveInfo {
@@ -489,7 +488,7 @@ func TestConvertToMimirSamples(t *testing.T) {
 			// This is sort of testing someone else's library, but it is useful here
 			// to show how the conversion works.
 			labelsBuilder := labels.NewBuilder(nil)
-			gotLabels := writeproxy.LabelsFromUntaggedName(test.metricName, labelsBuilder)
+			gotLabels := convert.LabelsFromUntaggedName(test.metricName, labelsBuilder)
 			if test.wantErr {
 				require.Nil(t, gotSamples)
 				require.NotNil(t, gotErr)
@@ -627,7 +626,7 @@ func TestConvertToMimirBlocks(t *testing.T) {
 	require.Nil(t, err)
 
 	labelsBuilder := labels.NewBuilder(nil)
-	labels := writeproxy.LabelsFromUntaggedName(metricName, labelsBuilder)
+	labels := convert.LabelsFromUntaggedName(metricName, labelsBuilder)
 
 	series := []storage.Series{convert.NewMimirSeries(labels, samples)}
 	blockFName, err := tsdb.CreateBlock(

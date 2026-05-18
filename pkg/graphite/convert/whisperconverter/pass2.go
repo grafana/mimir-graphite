@@ -16,7 +16,6 @@ import (
 	promtsdb "github.com/prometheus/prometheus/tsdb"
 
 	"github.com/grafana/mimir-graphite/v2/pkg/graphite/convert"
-	"github.com/grafana/mimir-graphite/v2/pkg/graphite/writeproxy"
 	"github.com/grafana/mimir-graphite/v2/pkg/tsdb"
 )
 
@@ -56,7 +55,7 @@ func buildMetricsIndex(nameIndex map[string]int64) []metricsIndexEntry {
 	for name, pos := range nameIndex {
 		labelsBuilder := labels.NewBuilder(nil)
 		index[idx] = metricsIndexEntry{
-			Labels: writeproxy.LabelsFromUntaggedName(name, labelsBuilder),
+			Labels: convert.LabelsFromUntaggedName(name, labelsBuilder),
 			Pos:    pos,
 		}
 		idx++

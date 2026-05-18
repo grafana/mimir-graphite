@@ -8,25 +8,7 @@ builds:
     goarch:
       - amd64
       - arm64
-  - id: "datadog-proxy-writes"
-    main: ./cmd/datadog-proxy-writes
-    binary: datadog-proxy-writes
-    goos:
-      - linux
-      - darwin
-    goarch:
-      - amd64
-      - arm64
-  - id: "graphite-proxy-writes"
-    main: ./cmd/graphite-proxy-writes
-    binary: graphite-proxy-writes
-    goos:
-      - linux
-      - darwin
-    goarch:
-      - amd64
-      - arm64
 archives:
   - files:
       - none*
-    name_template: "mimir-graphite_{{ .Tag }}_{{ .Os }}_{{ .Arch }}"
+    name_template: "mimir-whisper-converter_{{ .Tag }}_{{ .Os }}_{{ .Arch }}"

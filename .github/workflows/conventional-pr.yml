@@ -1,6 +1,5 @@
-# .github/workflows/conventional-pr.yml
-
 name: conventional-pr
+
 on:
   pull_request:
     branches:
@@ -10,25 +9,14 @@ on:
       - opened
       - edited
       - synchronize
+
+permissions:
+  contents: read
+  pull-requests: read
+
 jobs:
   lint-pr:
-    permissions:
-      contents: read
-      pull-requests: read
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
-        with:
-          persist-credentials: false
-      # check for the most recent release: https://github.com/CondeNast/conventional-pull-request-action/releases
-      # replace vX.X.X below with the most recently released version
-      - uses: CondeNast/conventional-pull-request-action@3ce30fdb4d2beef8b941f23a1114dd8188eba082 # v0.2.0
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          # to override config-conventional rules, specify a relative path to your rules module, actions/checkout is required for this setting!
-          commitlintRulesPath: "./commitlint.rules.js" # default: undefined
-          # if the PR contains a single commit, fail if the commit message and the PR title do not match
-          commitTitleMatch: "false"
-          # if you squash merge PRs and enabled "Default to PR title for squash merge commits", you can disable all linting of commits
-          ignoreCommits: "true"
+      - name: Lint PR title
+        uses: grafana/shared-workflows/actions/lint-pr-title@0239db2665246f3b078d8d9166e4d8f09c071cae # lint-pr-title/v1.2.2

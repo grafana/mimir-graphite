@@ -119,3 +119,7 @@ Further note that the Instance IDs for Prometheus and Graphite are different by 
 
 Once mimirtool is done uploading, there may be a delay before data appears in Grafana.
 But when it does, the data should be available in the Explore mode using the Graphite backend.
+
+## Releasing New Whisper Converter Versions
+
+Releases are produced manually: run [goreleaser](https://goreleaser.com/) locally against a tagged commit to build the artifacts, then create the corresponding GitHub release and upload them by hand.

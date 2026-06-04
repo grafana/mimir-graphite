@@ -1,0 +1,52 @@
+version: "3.9"
+
+include: 
+  - ./compose-grafana-mimir.yml
+
+services:
+  mimir-datadog-proxy: &mimir_proxy
+    image: grafana/mimir-proxies:1.1.0-memcached
+    container_name: mimir-datadog-proxy
+    hostname: mimir-datadog-proxy
+    environment:
+      - PROXY_TYPE=datadog
+      - PROXY_ENTRY_SERVER=load-balancer
+    profiles: ["datadog"]
+    depends_on: &mimir-playground
+      grafana:
+        condition: service_started
+      prometheus:
+        condition: service_started
+      load-balancer:
+        condition: service_started
+
+  mimir-graphite-proxy:
+    <<: *mimir_proxy
+    container_name: mimir-graphite-proxy
+    hostname: mimir-graphite-proxy
+    environment:
+      - PROXY_TYPE=graphite
+      - PROXY_ENTRY_SERVER=load-balancer
+    profiles: ["graphite"]
+
+  datadog:
+    container_name: datadog
+    image: gcr.io/datadoghq/agent:latest
+    pid: host
+    environment:
+     - DD_API_KEY=${DD_API_KEY}
+     - DD_SITE=${DD_SITE}
+     - DD_ADDITIONAL_ENDPOINTS=${DD_ADDITIONAL_ENDPOINTS}
+     - DD_LOGS_ENABLED=true
+     - DD_LOGS_CONFIG_CONTAINER_COLLECT_ALL=true
+     - DD_APM_ENABLED=true
+    volumes:
+     - /var/run/docker.sock:/var/run/docker.sock
+     - /proc/:/host/proc/:ro
+     - /sys/fs/cgroup:/host/sys/fs/cgroup:ro
+     - /var/lib/docker/containers:/var/lib/docker/containers:ro
+    profiles: ["datadog"]
+    depends_on:
+      mimir-datadog-proxy:
+        condition: service_started
+

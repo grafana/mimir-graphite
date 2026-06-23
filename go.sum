@@ -274,8 +274,8 @@ github.com/open-telemetry/opentelemetry-collector-contrib/processor/deltatocumul
 github.com/open-telemetry/opentelemetry-collector-contrib/processor/deltatocumulativeprocessor v0.124.1/go.mod h1:AsQJBuUUY1/yqK2c87hv4deeteaKwktwLIfQCN2OGk4=
 github.com/opencontainers/go-digest v1.0.0 h1:apOUWs51W5PlhuyGyz9FCeeBIOUDA/6nW8Oi/yOhh5U=
 github.com/opencontainers/go-digest v1.0.0/go.mod h1:0JzlMkj0TRzQZfJkVvzbP0HBR3IKzErnv2BNG4W4MAM=
-github.com/opencontainers/image-spec v1.1.0-rc2 h1:2zx/Stx4Wc5pIPDvIxHXvXtQFW/7XWJGmnM7r3wg034=
-github.com/opencontainers/image-spec v1.1.0-rc2/go.mod h1:3OVijpioIKYWTqjiG0zfF6wvoJ4fAXGbjdZuI2NgsRQ=
+github.com/opencontainers/image-spec v1.1.1 h1:y0fUlFfIZhPF1W537XOLg0/fcx6zcHCJwooC2xJA040=
+github.com/opencontainers/image-spec v1.1.1/go.mod h1:qpqAh3Dmcf36wStyyWU+kCeDgrGnAve2nCC8+7h8Q0M=
 github.com/opentracing-contrib/go-grpc v0.1.2 h1:MP16Ozc59kqqwn1v18aQxpeGZhsBanJ2iurZYaQSZ+g=
 github.com/opentracing-contrib/go-grpc v0.1.2/go.mod h1:glU6rl1Fhfp9aXUHkE36K2mR4ht8vih0ekOVlWKEUHM=
 github.com/opentracing-contrib/go-stdlib v1.1.1 h1:nl22krMt3PpAWPCKpDjFiAH4Qdr2855F5wOkQ52C0+w=

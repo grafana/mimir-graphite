@@ -1,0 +1,236 @@
+# Default metrics collected by this check. You should not have to modify this.
+jmx_metrics:
+
+  # Solr versions >= 7.0
+  - include:
+      domain: solr
+      category: SEARCHER
+      name:
+        - numDocs
+      scope:
+        - searcher
+      attribute:
+        Value:
+          alias: solr.searcher.numdocs
+          metric_type: gauge
+
+  - include:
+      domain: solr
+      category: SEARCHER
+      name: maxDoc
+      scope:
+        - searcher
+      attribute:
+        Value:
+          alias: solr.searcher.maxdocs
+          metric_type: gauge
+
+  - include:
+      domain: solr
+      category: SEARCHER
+      name: warmupTime
+      scope:
+        - searcher
+      attribute:
+        Value:
+          alias: solr.searcher.warmup
+          metric_type: gauge
+
+  - include:
+      domain: solr
+      category: CACHE
+      name: documentCache
+      scope:
+        - searcher
+      attribute:
+        cumulative_lookups:
+          alias: solr.document_cache.lookups
+          metric_type: counter
+        cumulative_hits:
+          alias: solr.document_cache.hits
+          metric_type: counter
+        cumulative_inserts:
+          alias: solr.document_cache.inserts
+          metric_type: counter
+        cumulative_evictions:
+          alias: solr.document_cache.evictions
+          metric_type: counter
+
+  - include:
+      domain: solr
+      category: CACHE
+      name: queryResultCache
+      scope:
+        - searcher
+      attribute:
+        cumulative_lookups:
+          alias: solr.query_result_cache.lookups
+          metric_type: counter
+        cumulative_hits:
+          alias: solr.query_result_cache.hits
+          metric_type: counter
+        cumulative_inserts:
+          alias: solr.query_result_cache.inserts
+          metric_type: counter
+        cumulative_evictions:
+          alias: solr.query_result_cache.evictions
+          metric_type: counter
+
+  - include:
+      domain: solr
+      category: CACHE
+      name: filterCache
+      scope:
+        - searcher
+      attribute:
+        cumulative_lookups:
+          alias: solr.filter_cache.lookups
+          metric_type: counter
+        cumulative_hits:
+          alias: solr.filter_cache.hits
+          metric_type: counter
+        cumulative_inserts:
+          alias: solr.filter_cache.inserts
+          metric_type: counter
+        cumulative_evictions:
+          alias: solr.filter_cache.evictions
+          metric_type: counter
+
+  - include:
+      domain: solr
+      category: QUERY
+      name: requests
+      attribute:
+        Count:
+          alias: solr.search_handler.requests
+          metric_type: counter
+
+  - include:
+      domain: solr
+      category: QUERY
+      name: timeouts
+      attribute:
+        Count:
+          alias: solr.search_handler.timeouts
+          metric_type: counter
+
+  - include:
+      domain: solr
+      category: QUERY
+      name: errors
+      attribute:
+        Count:
+          alias: solr.search_handler.errors
+          metric_type: counter
+
+  - include:
+      domain: solr
+      category: QUERY
+      name: totalTime
+      attribute:
+        Count:
+          alias: solr.search_handler.time
+          metric_type: counter
+
+  - include:
+      domain: solr
+      category: QUERY
+      name: requestTimes
+      attribute:
+        Mean:
+          alias: solr.search_handler.request_times.mean
+          metric_type: gauge
+        MeanRate:
+          alias: solr.search_handler.request_times.mean_rate
+          metric_type: gauge
+        50thPercentile:
+          alias: solr.search_handler.request_times.50percentile
+          metric_type: gauge
+        75thPercentile:
+          alias: solr.search_handler.request_times.75percentile
+          metric_type: gauge
+        95thPercentile:
+          alias: solr.search_handler.request_times.95percentile
+          metric_type: gauge
+        98thPercentile:
+          alias: solr.search_handler.request_times.98percentile
+          metric_type: gauge
+        99thPercentile:
+          alias: solr.search_handler.request_times.99percentile
+          metric_type: gauge
+        999thPercentile:
+          alias: solr.search_handler.request_times.999percentile
+          metric_type: gauge
+        OneMinuteRate:
+          alias: solr.search_handler.request_times.one_minute_rate
+          metric_type: gauge
+
+
+  # Solr versions < 7.0
+  - include:
+      domain: solr/gettingstarted
+      type: searcher
+      attribute:
+        maxDoc:
+          alias: solr.searcher.maxdoc
+          metric_type: gauge
+        numDocs:
+          alias: solr.searcher.numdocs
+          metric_type: gauge
+        warmupTime:
+          alias: solr.searcher.warmup
+          metric_type: gauge
+  - include:
+      domain: solr/gettingstarted
+      id: org.apache.solr.search.FastLRUCache
+      attribute:
+        cumulative_lookups:
+          alias: solr.cache.lookups
+          metric_type: counter
+        cumulative_hits:
+          alias: solr.cache.hits
+          metric_type: counter
+        cumulative_inserts:
+          alias: solr.cache.inserts
+          metric_type: counter
+        cumulative_evictions:
+          alias: solr.cache.evictions
+          metric_type: counter
+  - include:
+      domain: solr/gettingstarted
+      id: org.apache.solr.search.LRUCache
+      attribute:
+        cumulative_lookups:
+          alias: solr.cache.lookups
+          metric_type: counter
+        cumulative_hits:
+          alias: solr.cache.hits
+          metric_type: counter
+        cumulative_inserts:
+          alias: solr.cache.inserts
+          metric_type: counter
+        cumulative_evictions:
+          alias: solr.cache.evictions
+          metric_type: counter
+  - include:
+      domain: solr/gettingstarted
+      id: org.apache.solr.handler.component.SearchHandler
+      attribute:
+        errors:
+          alias: solr.search_handler.errors
+          metric_type: counter
+        requests:
+          alias: solr.search_handler.requests
+          metric_type: counter
+        timeouts:
+          alias: solr.search_handler.timeouts
+          metric_type: counter
+        totalTime:
+          alias: solr.search_handler.time
+          metric_type: counter
+        avgTimePerRequest:
+          alias: solr.search_handler.avg_time_per_req
+          metric_type: gauge
+        avgRequestsPerSecond:
+          alias: solr.search_handler.avg_requests_per_sec
+          metric_type: gauge

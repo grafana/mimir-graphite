@@ -1,0 +1,34 @@
+# Configure Mimir to use Minio as object storage backend.
+common:
+  storage:
+    backend: s3
+    s3:
+      endpoint: minio:9000
+      access_key_id: mimir
+      secret_access_key: supersecret
+      insecure: true
+      bucket_name: mimir
+
+ingester:
+  ring:
+    replication_factor: 1
+
+# Blocks storage requires a prefix when using a common object storage bucket.
+blocks_storage:
+  storage_prefix: blocks
+  tsdb:
+    dir: /data/ingester
+
+ruler:
+  rule_path: /data/ruler
+  alertmanager_url: http://127.0.0.1:8080/alertmanager
+  ring:
+    # Quickly detect unhealthy rulers to speed up the tutorial.
+    heartbeat_period: 2s
+    heartbeat_timeout: 10s
+
+alertmanager:
+  data_dir: /data/alertmanager
+
+server:
+  log_level: warn

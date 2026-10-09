@@ -12,7 +12,7 @@ require (
 	github.com/kisielk/whisper-go v0.0.0-20140112135752-82e8091afdea
 	github.com/oklog/ulid/v2 v2.1.1
 	github.com/pkg/errors v0.9.1
-	github.com/prometheus/common v0.68.0
+	github.com/prometheus/common v0.69.0
 	github.com/prometheus/prometheus v1.99.0
 	github.com/stretchr/testify v1.11.1
 )

@@ -99,6 +99,29 @@ func TestTsdbBuilder(t *testing.T) {
 	verifyBlock(t, filepath.Join(tmpDir, id.String()), series)
 }
 
+func TestTsdbBuilderRejectsUnsortedOrDuplicateLabelNames(t *testing.T) {
+	for name, names := range map[string][]string{
+		"unsorted":  {"b", "a"},
+		"duplicate": {"a", "a"},
+	} {
+		t.Run(name, func(t *testing.T) {
+			builder, err := NewBuilder(t.TempDir(), Options{
+				SymbolsBatchSize: 1000,
+				SeriesBatchSize:  1000,
+			})
+			require.NoError(t, err)
+
+			sb := labels.NewScratchBuilder(len(names))
+			for _, n := range names {
+				sb.Add(n, "v")
+			}
+
+			err = builder.AddSeriesWithSamples(sb.Labels(), newSamplesIterator([]model.SamplePair{{Timestamp: 1000, Value: 1}}))
+			require.ErrorContains(t, err, "labels names not unique or sorted")
+		})
+	}
+}
+
 //nolint:gosec // Disable linter complaining about insecure random numbers. We don't use random numbers in security context here.
 func TestCreateBlock(t *testing.T) {
 	series := []storage.Series(nil)

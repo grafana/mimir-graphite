@@ -350,6 +350,10 @@ func (s samplesIterator) AtT() int64 {
 	return int64(s.samples[s.it].Timestamp)
 }
 
+func (s samplesIterator) AtST() int64 {
+	return 0
+}
+
 type storageSeries struct {
 	l labels.Labels
 	s []model.SamplePair

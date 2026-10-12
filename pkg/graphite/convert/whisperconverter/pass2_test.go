@@ -96,7 +96,7 @@ func createData(metricNames []string) map[string]*mimirpb.TimeSeries {
 
 	data := make(map[string]*mimirpb.TimeSeries)
 	for _, m := range metricNames {
-		labelsBuilder := labels.NewBuilder(nil)
+		labelsBuilder := labels.NewBuilder(labels.EmptyLabels())
 		labels := convert.LabelsFromUntaggedName(m, labelsBuilder)
 		samples := make([]mimirpb.Sample, numSamples)
 		for i := 0; i < numSamples; i++ {

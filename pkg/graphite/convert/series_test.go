@@ -4,13 +4,14 @@ import (
 	"testing"
 
 	"github.com/grafana/mimir/pkg/mimirpb"
+	"github.com/prometheus/prometheus/model/labels"
 	"github.com/prometheus/prometheus/tsdb/chunkenc"
 	"github.com/stretchr/testify/require"
 )
 
 func TestMimirSeriesIterator_BasicIteration(t *testing.T) {
 	s := MimirSeries{
-		l: nil,
+		l: labels.EmptyLabels(),
 		s: []mimirpb.Sample{
 			{TimestampMs: 1000, Value: 10},
 			{TimestampMs: 1010, Value: 20},
@@ -37,7 +38,7 @@ func TestMimirSeriesIterator_BasicIteration(t *testing.T) {
 
 func TestMimirSeriesIterator_Seek(t *testing.T) {
 	s := MimirSeries{
-		l: nil,
+		l: labels.EmptyLabels(),
 		s: []mimirpb.Sample{
 			{TimestampMs: 1000, Value: 10},
 			{TimestampMs: 1010, Value: 20},

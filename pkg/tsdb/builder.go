@@ -365,11 +365,14 @@ func addSymbolsToIndexWriter(indexWriter *index.Writer, symbolFiles []string) er
 
 func (b *Builder) addSeries(lbls labels.Labels, chunks []chunks.Meta) error {
 	prev := labels.Label{}
-	for _, l := range lbls {
+	if err := lbls.Validate(func(l labels.Label) error {
 		if prev.Name >= l.Name {
 			return fmt.Errorf("labels names not unique or sorted: %v", lbls.String())
 		}
 		prev = l
+		return nil
+	}); err != nil {
+		return err
 	}
 
 	for ix := range chunks {
@@ -408,16 +411,15 @@ func (b *Builder) addSymbols(lbls labels.Labels) error {
 	b.symbolsMtx.Lock()
 	defer b.symbolsMtx.Unlock()
 
-	for _, l := range lbls {
+	return lbls.Validate(func(l labels.Label) error {
 		if err := b.symbols.addSymbol(l.Name); err != nil {
 			return err
 		}
 		if err := b.symbols.addSymbol(l.Value); err != nil {
 			return err
 		}
-	}
-
-	return nil
+		return nil
+	})
 }
 
 // samplesToChunks iterates through samples, and stores them into XOR chunks, used by Prometheus TSDB.
@@ -473,7 +475,7 @@ func samplesToChunks(samples chunkenc.Iterator, minBlockTime, maxBlockTime int64
 			}
 		}
 
-		app.Append(ts, val)
+		app.Append(0, ts, val)
 		prevTS = ts
 
 		if chunk.NumSamples() >= samplesPerChunk {
@@ -609,10 +611,10 @@ func addSortedInMemorySeriesSymbolsToIndex(indexWriter *index.Writer, series []s
 	symbolsMap[""] = struct{}{}
 
 	for _, s := range series {
-		for _, l := range s.Labels() {
+		s.Labels().Range(func(l labels.Label) {
 			symbolsMap[l.Name] = struct{}{}
 			symbolsMap[l.Value] = struct{}{}
-		}
+		})
 	}
 
 	// collect to slice

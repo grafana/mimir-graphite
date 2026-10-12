@@ -117,7 +117,7 @@ func (c *WhisperConverter) createIntermediateFromChan(files chan string, interme
 			c.progress.IncSkipped()
 			continue
 		}
-		labelsBuilder := labels.NewBuilder(nil)
+		labelsBuilder := labels.NewBuilder(labels.EmptyLabels())
 		labels := convert.LabelsFromUntaggedName(metricName, labelsBuilder)
 
 		blocks := SplitSamplesByDays(samples)

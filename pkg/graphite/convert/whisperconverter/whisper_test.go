@@ -427,7 +427,7 @@ func TestConvertToMimirSamples(t *testing.T) {
 			name:        "no points",
 			metricName:  "mymetric",
 			points:      []whisper.Point{},
-			wantLabels:  nil,
+			wantLabels:  labels.EmptyLabels(),
 			wantSamples: nil,
 			wantErr:     true,
 		},
@@ -439,32 +439,14 @@ func TestConvertToMimirSamples(t *testing.T) {
 				whisper.NewPoint(time.Unix(1001, 0), 42),
 				whisper.NewPoint(time.Unix(1004, 0), 27.5),
 			},
-			wantLabels: labels.Labels{
-				{
-					Name:  "__n000__",
-					Value: "something",
-				},
-				{
-					Name:  "__n001__",
-					Value: "somewhere",
-				},
-				{
-					Name:  "__n002__",
-					Value: "hosts",
-				},
-				{
-					Name:  "__n003__",
-					Value: "cluster-prod-app-03_cool-dub_example_com",
-				},
-				{
-					Name:  "__n004__",
-					Value: "cpu_usage",
-				},
-				{
-					Name:  "__name__",
-					Value: "graphite_untagged",
-				},
-			},
+			wantLabels: labels.FromStrings(
+				"__n000__", "something",
+				"__n001__", "somewhere",
+				"__n002__", "hosts",
+				"__n003__", "cluster-prod-app-03_cool-dub_example_com",
+				"__n004__", "cpu_usage",
+				"__name__", "graphite_untagged",
+			),
 			wantSamples: []mimirpb.Sample{
 				{
 					TimestampMs: 1000000,
@@ -487,7 +469,7 @@ func TestConvertToMimirSamples(t *testing.T) {
 			gotSamples, gotErr := ToMimirSamples(test.points)
 			// This is sort of testing someone else's library, but it is useful here
 			// to show how the conversion works.
-			labelsBuilder := labels.NewBuilder(nil)
+			labelsBuilder := labels.NewBuilder(labels.EmptyLabels())
 			gotLabels := convert.LabelsFromUntaggedName(test.metricName, labelsBuilder)
 			if test.wantErr {
 				require.Nil(t, gotSamples)
@@ -625,7 +607,7 @@ func TestConvertToMimirBlocks(t *testing.T) {
 	samples, err := WhisperToMimirSamples(testFilePath, metricName)
 	require.Nil(t, err)
 
-	labelsBuilder := labels.NewBuilder(nil)
+	labelsBuilder := labels.NewBuilder(labels.EmptyLabels())
 	labels := convert.LabelsFromUntaggedName(metricName, labelsBuilder)
 
 	series := []storage.Series{convert.NewMimirSeries(labels, samples)}

@@ -4,6 +4,7 @@
 	"maxTime": 1650480728001,
 	"stats": {
 		"numSamples": 59,
+		"numFloatSamples": 59,
 		"numSeries": 1,
 		"numChunks": 3
 	},

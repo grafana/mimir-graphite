@@ -13,8 +13,7 @@ const (
 )
 
 func LabelsFromUntaggedName(name string, builder *labels.Builder) labels.Labels {
-	// number of metric name nodes, +1 for the prom name
-	builder.Reset(make(labels.Labels, 0, strings.Count(name, ".")+2)) //nolint:gomnd
+	builder.Reset(labels.EmptyLabels())
 
 	for i, node := range strings.Split(name, ".") {
 		builder.Set(fmt.Sprintf("__n%03d__", i), node)

@@ -53,7 +53,7 @@ func buildMetricsIndex(nameIndex map[string]int64) []metricsIndexEntry {
 	index := make([]metricsIndexEntry, len(nameIndex))
 	idx := 0
 	for name, pos := range nameIndex {
-		labelsBuilder := labels.NewBuilder(nil)
+		labelsBuilder := labels.NewBuilder(labels.EmptyLabels())
 		index[idx] = metricsIndexEntry{
 			Labels: convert.LabelsFromUntaggedName(name, labelsBuilder),
 			Pos:    pos,
@@ -120,13 +120,16 @@ func (c *WhisperConverter) createOneBlock(fname, blocksDir string) error {
 			return convert.ErrBadData
 		}
 
-		labels := mimirpb.FromLabelAdaptersToLabels(ms.Labels)
-		if len(c.customLabels) != 0 {
-			labels = append(labels, c.customLabels...)
-			sort.Sort(labels)
+		lbls := mimirpb.FromLabelAdaptersToLabels(ms.Labels)
+		if !c.customLabels.IsEmpty() {
+			sb := labels.NewScratchBuilder(lbls.Len() + c.customLabels.Len())
+			lbls.Range(func(l labels.Label) { sb.Add(l.Name, l.Value) })
+			c.customLabels.Range(func(l labels.Label) { sb.Add(l.Name, l.Value) })
+			sb.Sort()
+			lbls = sb.Labels()
 		}
 
-		s := convert.NewMimirSeries(labels, ms.Samples)
+		s := convert.NewMimirSeries(lbls, ms.Samples)
 		err = builder.AddSeriesWithSamples(s.Labels(), s.Iterator(nil))
 		if err != nil {
 			return err

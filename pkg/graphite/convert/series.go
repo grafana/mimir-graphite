@@ -92,6 +92,10 @@ func (i *mimirSeriesIterator) AtT() int64 {
 	return i.s.s[i.idx].TimestampMs
 }
 
+func (i *mimirSeriesIterator) AtST() int64 {
+	return 0
+}
+
 func (i *mimirSeriesIterator) AtFloatHistogram(_ *histogram.FloatHistogram) (int64, *histogram.FloatHistogram) {
 	return 0, nil
 }

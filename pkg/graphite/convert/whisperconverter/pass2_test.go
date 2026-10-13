@@ -1,15 +1,21 @@
 package whisperconverter
 
 import (
+	"context"
 	"math/rand"
 	"os"
+	"path/filepath"
 	"regexp"
 	"testing"
 	"time"
 
 	"github.com/go-kit/log"
 	"github.com/grafana/mimir/pkg/mimirpb"
+	log2 "github.com/grafana/mimir/pkg/util/log"
 	"github.com/prometheus/prometheus/model/labels"
+	promtsdb "github.com/prometheus/prometheus/tsdb"
+	"github.com/prometheus/prometheus/tsdb/chunks"
+	"github.com/prometheus/prometheus/tsdb/index"
 	"github.com/stretchr/testify/require"
 
 	"github.com/grafana/mimir-graphite/v2/pkg/graphite/convert"
@@ -50,6 +56,10 @@ func TestCommandPass2(t *testing.T) {
 		dates = append(dates, d)
 	}
 
+	// Asortsfirst sorts before __name__. If pass2 doesn't re-sort after merging custom labels,
+	// the builder rejects the series and CommandPass2 exits, which fails this test.
+	customLabels := labels.FromStrings("customlabel", "val", "Asortsfirst", "val2")
+
 	c := NewWhisperConverter(
 		"",
 		"",
@@ -57,7 +67,7 @@ func TestCommandPass2(t *testing.T) {
 		2,
 		1,
 		0,
-		labels.FromStrings("customlabel", "val"),
+		customLabels,
 		dates,
 		log.NewNopLogger(),
 	)
@@ -66,6 +76,7 @@ func TestCommandPass2(t *testing.T) {
 	require.NoError(t, err)
 
 	blockToRemove := checkBlockSimpleValid(t, tmpBlockDir)
+	checkBlockSeriesHaveLabels(t, filepath.Join(tmpBlockDir, blockToRemove), customLabels)
 
 	// Test resume by removing one of the blocks
 	_ = os.RemoveAll(tmpBlockDir + "/" + blockToRemove)
@@ -78,7 +89,7 @@ func TestCommandPass2(t *testing.T) {
 		2,
 		1,
 		0,
-		labels.FromStrings("customlabel", "val"),
+		customLabels,
 		dates,
 		log.NewNopLogger(),
 	)
@@ -96,7 +107,7 @@ func createData(metricNames []string) map[string]*mimirpb.TimeSeries {
 
 	data := make(map[string]*mimirpb.TimeSeries)
 	for _, m := range metricNames {
-		labelsBuilder := labels.NewBuilder(nil)
+		labelsBuilder := labels.NewBuilder(labels.EmptyLabels())
 		labels := convert.LabelsFromUntaggedName(m, labelsBuilder)
 		samples := make([]mimirpb.Sample, numSamples)
 		for i := 0; i < numSamples; i++ {
@@ -157,4 +168,33 @@ func checkBlockSimpleValid(t *testing.T, path string) string {
 	require.True(t, foundWal)
 
 	return exampleBlock
+}
+
+func checkBlockSeriesHaveLabels(t *testing.T, blockDir string, want labels.Labels) {
+	b, err := promtsdb.OpenBlock(log2.SlogFromGoKit(log.NewNopLogger()), blockDir, nil, nil)
+	require.NoError(t, err)
+	t.Cleanup(func() { _ = b.Close() })
+
+	idx, err := b.Index()
+	require.NoError(t, err)
+	t.Cleanup(func() { _ = idx.Close() })
+
+	allK, allV := index.AllPostingsKey()
+	p, err := idx.Postings(context.Background(), allK, allV)
+	require.NoError(t, err)
+
+	numSeries := 0
+	for p.Next() {
+		var lblsBuilder labels.ScratchBuilder
+		var chks []chunks.Meta
+		require.NoError(t, idx.Series(p.At(), &lblsBuilder, &chks))
+
+		lbls := lblsBuilder.Labels()
+		want.Range(func(l labels.Label) {
+			require.Equal(t, l.Value, lbls.Get(l.Name), lbls.String())
+		})
+		numSeries++
+	}
+	require.NoError(t, p.Err())
+	require.Positive(t, numSeries)
 }

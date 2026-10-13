@@ -18,9 +18,14 @@ import (
 )
 
 type series struct {
-	// fields must be exported, so that they are preserved by Gob
 	Metric labels.Labels
 	Chunks []chunks.Meta // Note: we clear the Chunk field before serialization.
+}
+
+// gobSeries is the on-disk form of series. labels.Labels has no exported fields, so Gob can't encode it directly.
+type gobSeries struct {
+	Metric []labels.Label
+	Chunks []chunks.Meta
 }
 
 // seriesBatcher keeps list of series in memory, until and then stores them sorted into files.
@@ -89,7 +94,9 @@ func writeSeriesToFile(filename string, sortedSeries []series) error {
 	errs := promErrors.NewMulti()
 
 	for _, s := range sortedSeries {
-		err := enc.Encode(s)
+		gs := gobSeries{Metric: make([]labels.Label, 0, s.Metric.Len()), Chunks: s.Chunks}
+		s.Metric.Range(func(l labels.Label) { gs.Metric = append(gs.Metric, l) })
+		err := enc.Encode(gs)
 		if err != nil {
 			errs.Add(err)
 			break
@@ -253,12 +260,12 @@ func (sf *seriesFile) Next() (series, error) {
 }
 
 func (sf *seriesFile) readNext() (series, error) {
-	var s series
-	err := sf.dec.Decode(&s)
+	var gs gobSeries
+	err := sf.dec.Decode(&gs)
 	// Decode returns io.EOF at the end.
 	if err != nil {
 		return series{}, err
 	}
 
-	return s, nil
+	return series{Metric: labels.New(gs.Metric...), Chunks: gs.Chunks}, nil
 }

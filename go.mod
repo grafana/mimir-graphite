@@ -3,7 +3,7 @@ module github.com/grafana/mimir-graphite/v2
 go 1.26.9
 
 require (
-	github.com/go-graphite/go-whisper v0.0.0-20230526115116-e3110f57c01c
+	github.com/go-graphite/go-whisper v0.0.0-20261007104122-398cef1c3450
 	github.com/go-kit/log v0.2.1
 	github.com/gogo/protobuf v1.3.2
 	github.com/golang/snappy v1.0.0

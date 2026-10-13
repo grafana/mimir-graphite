@@ -8,7 +8,7 @@ require (
 	github.com/gogo/protobuf v1.3.2
 	github.com/golang/snappy v1.0.0
 	github.com/grafana/dskit v0.0.0-20260916161559-407dda1fce2b
-	github.com/grafana/mimir v1.3.1-0.20261012083825-2155d5ed4af4
+	github.com/grafana/mimir v1.11.0-rc.0
 	github.com/kisielk/whisper-go v0.0.0-20140112135752-82e8091afdea
 	github.com/oklog/ulid/v2 v2.1.2
 	github.com/pkg/errors v0.9.1

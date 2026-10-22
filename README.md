@@ -1,3 +1,7 @@
+# UNMAINTAINED
+
+As of October 2026, Grafana is no longer maintaining this repository. The code has minimal dependencies, so if a graphite migration is required, it could be forked or revived. We are also accepting offers of adoption should someone want to inherit it.
+
 <a href="https://goreportcard.com/report/github.com/grafana/mimir-graphite"><img src="https://goreportcard.com/badge/github.com/grafana/mimir-graphite" alt="Go Report Card" /></a>
 
 # Graphite Whisper Converter
